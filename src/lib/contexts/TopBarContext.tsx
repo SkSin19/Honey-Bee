@@ -1,27 +1,27 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { convertTabPropsToOptions } from 'expo-router/build/native-tabs/NativeTabTrigger'
+import { PropsWithChildren } from 'react'
+import { StyleSheet, View } from 'react-native'
 import TopBar from '@/components/resuables/TopBar'
 
 interface Types {
     containTopBar: boolean
 }
 
-const HEIGHT = (20/100) * window.innerHeight
-
-const TopBarContext = ({containTopBar}: Types) => {
+const TopBarContext = ({ containTopBar, children }: PropsWithChildren<Types>) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
         {containTopBar && <TopBar />}
-    </SafeAreaView>
+        <View style={styles.content}>{children}</View>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        height: HEIGHT
-    }
+    container: {
+        flex: 1,
+    },
+    content: {
+        flex: 1,
+    },
 })
 
 export default TopBarContext
