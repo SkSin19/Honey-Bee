@@ -5,6 +5,7 @@ import { useColorScheme } from 'react-native';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import AppTabs from '@/components/app-tabs';
 import TopBarContext from '@/lib/contexts/TopBarContext';
+import { SettingsProvider } from '@/lib/contexts/SettingsContext';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,9 +13,11 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <TopBarContext containTopBar={true}>
-        <AppTabs />
-      </TopBarContext>
+      <SettingsProvider>
+        <TopBarContext containTopBar={true}>
+          <AppTabs />
+        </TopBarContext>
+      </SettingsProvider>
       <AnimatedSplashOverlay />
     </ThemeProvider>
   );
