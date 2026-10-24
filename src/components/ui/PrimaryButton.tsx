@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+
 import { Radius } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -8,23 +9,13 @@ interface Props {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-  tone?: 'accent' | 'success' | 'danger';
-  style?: ViewStyle;
 }
 
-export function PrimaryButton({ label, onPress, disabled, loading, tone = 'accent', style }: Props) {
+export function PrimaryButton({ label, onPress, disabled, loading }: Props) {
   const theme = useTheme();
   const [pressed, setPressed] = useState(false);
   const inactive = disabled || loading;
-
-  const face =
-    tone === 'success' ? theme.success : tone === 'danger' ? theme.danger : theme.accent;
-  const edge =
-    tone === 'success' ? theme.successDark : tone === 'danger' ? theme.dangerDark : theme.accentDark;
-
-  const faceColor = inactive ? theme.backgroundSelected : face;
-  const edgeColor = inactive ? theme.border : edge;
-  const textColor = inactive ? theme.textSecondary : tone === 'accent' ? theme.onAccent : '#FFFFFF';
+  const textColor = inactive ? theme.textSecondary : theme.onAccent;
 
   return (
     <Pressable
@@ -32,11 +23,14 @@ export function PrimaryButton({ label, onPress, disabled, loading, tone = 'accen
       disabled={inactive}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
-      style={[{ borderRadius: Radius.md, backgroundColor: edgeColor }, style]}>
+      style={{ borderRadius: Radius.md, backgroundColor: inactive ? theme.border : theme.accentDark }}>
       <View
         style={[
           styles.face,
-          { backgroundColor: faceColor, marginBottom: pressed || inactive ? 0 : 5 },
+          {
+            backgroundColor: inactive ? theme.backgroundSelected : theme.accent,
+            marginBottom: pressed || inactive ? 0 : 4,
+          },
         ]}>
         {loading ? (
           <ActivityIndicator color={textColor} />
@@ -51,14 +45,12 @@ export function PrimaryButton({ label, onPress, disabled, loading, tone = 'accen
 const styles = StyleSheet.create({
   face: {
     borderRadius: Radius.md,
-    paddingVertical: 16,
+    paddingVertical: 15,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '800',
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
   },
 });

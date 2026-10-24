@@ -18,11 +18,6 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "permissions": [
-        "android.permissions.cameraPermission",
-        "android.permissions.microphonePermission",
-        "android.permission.RECORD_AUDIO"
-      ],
       "package": "com.sakshamsinha.honeybee"
     },
     "web": {
@@ -45,7 +40,9 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "photosPermission": "HoneyBee uses your photos so it can check your work.",
+          "cameraPermission": "HoneyBee uses the camera so you can snap your work.",
+          "microphonePermission": false,
           "colors": {
             "cropToolbarColor": "#000000"
           },

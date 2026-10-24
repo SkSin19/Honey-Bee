@@ -1,10 +1,10 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import AppTabs from '@/components/app-tabs';
-import TopBarContext from '@/lib/contexts/TopBarContext';
+import TopBar from '@/components/TopBar';
 import { SettingsProvider } from '@/lib/contexts/SettingsContext';
 
 SplashScreen.preventAutoHideAsync();
@@ -14,9 +14,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <SettingsProvider>
-        <TopBarContext containTopBar={true}>
+        <View style={{ flex: 1 }}>
+          <TopBar />
           <AppTabs />
-        </TopBarContext>
+        </View>
       </SettingsProvider>
       <AnimatedSplashOverlay />
     </ThemeProvider>

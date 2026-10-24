@@ -1,9 +1,4 @@
-import { Platform } from 'react-native';
-
-const fallback =
-  Platform.OS === 'android' ? 'http://10.21.33.213:8001' : 'http://10.21.33.213:8001';
-
-export const DEFAULT_API_URL = process.env.EXPO_PUBLIC_API_URL ?? fallback;
+export const DEFAULT_API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://10.21.33.213:8001';
 
 export const SUBJECTS = [
   'Math',
@@ -17,6 +12,8 @@ export const SUBJECTS = [
   'General',
 ] as const;
 
+export type Subject = (typeof SUBJECTS)[number];
+
 export const FORMATS = [
   { key: 'handwritten', label: 'Handwritten' },
   { key: 'printed_math', label: 'Printed math' },
@@ -25,7 +22,7 @@ export const FORMATS = [
 
 export type InputFormat = (typeof FORMATS)[number]['key'];
 
-export const ERROR_LABELS: Record<string, string> = {
+const ERROR_LABELS: Record<string, string> = {
   calculation_error: 'Calculation slip',
   conceptual_misunderstanding: 'Concept mix-up',
   sign_error: 'Sign error',
@@ -41,8 +38,5 @@ export const ERROR_LABELS: Record<string, string> = {
 };
 
 export function prettyError(key: string | null): string {
-  if (!key) {
-    return 'Mistake';
-  }
-  return ERROR_LABELS[key] ?? key;
+  return key ? (ERROR_LABELS[key] ?? key) : 'Mistake';
 }
